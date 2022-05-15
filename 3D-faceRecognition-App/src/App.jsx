@@ -3,12 +3,12 @@
 // Setup webcam and canvas ✅
 // Define references to those ✅
 // Load facemesh ✅
-// Detect function
-// Drawing utilities
-// Load triangulation
-// Setup triangle path
-// Setup point drawing
-// Add draw Mesh to detect function
+// Detect function ✅
+// Drawing utilities ✅
+// Load triangulation ✅
+// Setup triangle path ✅
+// Setup point drawing ✅
+// Add draw Mesh to detect function ✅
 
 import React, { useState, useRef } from "react";
 // import logo from "./logo.svg";

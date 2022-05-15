@@ -178,7 +178,7 @@ const drawPath = (ctx, points, closePath) => {
   if (closePath) {
     region.closePath();
   }
-  ctx.strokeStyle = "aqua";
+  ctx.strokeStyle = "pink";
   ctx.stroke(region);
 };
 
