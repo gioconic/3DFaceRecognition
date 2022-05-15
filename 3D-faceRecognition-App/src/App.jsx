@@ -25,12 +25,48 @@ function App() {
   const canvasRef = useRef(null);
 
   // Load facemesh
+  // Load the nuronal network from TFJS
   const runFacemesh = async () => {
     const net = await facemesh.load({
       inputResolution: { width: 640, height: 480 },
       scale: 0.8,
     });
+    // Calling the detection models, setting an interval of 100ms
+    setInterval(() => {
+      // Every 100ms will run this function, grabbing the webcam and trying to detect the face
+      detect(net);
+    }, 100);
   };
+
+  // Detect function - Checks if the camera is up, running and receiving data
+  const detect = async (net) => {
+    if (
+      typeof webcamRef.current !== "undefined" &&
+      webcamRef.current !== null &&
+      webcamRef.current.video.readyState === 4
+    ) {
+      // Geet video properties - Properties from the webcam
+      const video = webcamRef.current.video; // Gets the video from the webcam
+      const videoWidth = webcamRef.current.video.videoWidth;
+      const videoHeight = webcamRef.current.video.videoHeight;
+
+      // Set video width
+      webcamRef.current.video.width = videoWidth;
+      webcamRef.current.video.height = videoHeight;
+
+      // Set canvas width
+      canvasRef.current.width = videoWidth;
+      canvasRef.current.height = videoHeight;
+
+      // Make detections - receive 'net' from TensorFlow and run the method, taking the video as parameter from the webcam
+      const face = await net.estimateFaces(video);
+      console.log(face);
+
+      // Make detectionsGet canvas context for drawing
+    }
+  };
+
+  runFacemesh();
 
   return (
     <div className="App">
