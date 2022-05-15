@@ -168,14 +168,42 @@ export const TRIANGULATION = [
   372, 353, 390, 339, 249, 339, 448, 255,
 ];
 // Draw triangle
+const drawPath = (ctx, points, closePath) => {
+  const region = new Path2D();
+  region.moveTo(points[0][0], points[0][1]);
+  for (let i = 0; i < points.length; i++) {
+    const point = points[i];
+    region.lineTo(point[0], point[1]);
+  }
+  if (closePath) {
+    region.closePath();
+  }
+  ctx.strokeStyle = "aqua";
+  ctx.stroke(region);
+};
+
 // Draw the points
 // It receives the predictions and canvas, to the loop through the predictions and draw the canvas
 export const drawMesh = (predictions, ctx) => {
   if (predictions.length > 0) {
+    // Draw points
     // For each of the predictions, it's goingthrough the scaled mesh key;
     // Then, from that it's looping through and grabbing the x and y coordinates
     predictions.forEach((prediction) => {
       const keypoints = prediction.scaledMesh;
+
+      // Draw triangles
+      for (let i = 0; i < TRIANGULATION.length / 3; i++) {
+        // Get sets of three keypoints for the triangle
+        const points = [
+          TRIANGULATION[i * 3],
+          TRIANGULATION[i * 3 + 1],
+          TRIANGULATION[i * 3 + 2],
+        ].map((index) => keypoints[index]);
+        //  Draw triangle
+        drawPath(ctx, points, true);
+      }
+
       for (let i = 0; i < keypoints.length; i++) {
         const x = keypoints[i][0];
         const y = keypoints[i][1];
