@@ -1,8 +1,8 @@
 // Install dependencies ✅
-// Import dependencies
-// Setup webcam and canvas
-// Define references to those
-// Load facemesh
+// Import dependencies ✅
+// Setup webcam and canvas ✅
+// Define references to those ✅
+// Load facemesh ✅
 // Detect function
 // Drawing utilities
 // Load triangulation
@@ -10,45 +10,52 @@
 // Setup point drawing
 // Add draw Mesh to detect function
 
-import { useState } from "react";
-import logo from "./logo.svg";
+import React, { useState, useRef } from "react";
+// import logo from "./logo.svg";
 import "./App.css";
 
+// Required dependencies
+import * as tf from "@tensorflow/tfjs";
+import * as facemesh from "@tensorflow-models/facemesh";
+import Webcam from "react-webcam";
+
 function App() {
-  const [count, setCount] = useState(0);
+  // Setup references (webcam and canvas)
+  const webcamRef = useRef(null);
+  const canvasRef = useRef(null);
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.jsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {" | "}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
+      {/* Setup references (webcam and canvas) */}
+      <header className="app-header">
+        <Webcam
+          ref={webcamRef}
+          style={{
+            position: "absolute",
+            marginLeft: "auto",
+            marginRight: "auto",
+            left: 0,
+            right: 0,
+            textAlign: "center",
+            zIndex: 9,
+            width: 640,
+            height: 480,
+          }}
+        />
+        <canvas
+          ref={canvasRef}
+          style={{
+            position: "absolute",
+            marginLeft: "auto",
+            marginRight: "auto",
+            left: 0,
+            right: 0,
+            textAlign: "center",
+            zIndex: 9,
+            width: 640,
+            height: 480,
+          }}
+        />
       </header>
     </div>
   );
